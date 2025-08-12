@@ -98,4 +98,65 @@ button:hover {
     background-color: #f8d7da;
     color: #721c24;
     display: block;
+
+}
+
+/* ===== עיצובים חדשים עבור הטבלה ===== */
+.data-table-section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 900px;
+    margin-top: 40px;
+}
+
+.data-table-section h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    max-height: 500px;
+    overflow-y: auto; /* מאפשר גלילה אם הטבלה ארוכה */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+#clients-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+#clients-table th, #clients-table td {
+    padding: 12px 15px;
+    text-align: right;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#clients-table thead tr {
+    background-color: #f4f7f9;
+    color: #34495e;
+    font-weight: 600;
+}
+
+#clients-table tbody tr:nth-of-type(even) {
+    background-color: #fcfcfc;
+}
+
+#clients-table tbody tr:hover {
+    background-color: #ecf0f1;
 }
