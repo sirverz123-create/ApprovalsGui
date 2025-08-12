@@ -76,7 +76,7 @@ clientIdInput.addEventListener('input', () => {
     }
 });
 
-// האזנה לשליחת הטופס (נשאר כפי שהיה)
+// האזנה לשליחת הטופס (גרסה מתוקנת ויציבה)
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
@@ -91,11 +91,16 @@ form.addEventListener('submit', (e) => {
         notes: document.getElementById('notes').value
     };
 
+    // ===== כאן נמצא התיקון המרכזי =====
+    // אנחנו שולחים את הבקשה ומצפים לתשובת JSON ישירה
     fetch(WEB_APP_URL, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(formData)
     })
-    .then(response => response.json())
+    .then(res => res.json()) // עיבוד התשובה כ-JSON
     .then(result => {
         if (result.success) {
             showResponseMessage("האישור נשמר בהצלחה!", false);
@@ -107,6 +112,7 @@ form.addEventListener('submit', (e) => {
     })
     .catch(error => {
         showResponseMessage(`שגיאה בשמירת האישור: ${error.message}`, true);
+        console.error('Submit Error:', error);
     })
     .finally(() => {
         submitBtn.disabled = false;
@@ -132,3 +138,4 @@ function showResponseMessage(message, isError) {
     responseMessage.textContent = message;
     responseMessage.className = isError ? 'error' : 'success';
 }
+
