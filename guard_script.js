@@ -9,6 +9,7 @@ const statusDisplay = document.getElementById('status-display');
 const approvalStatusSpan = document.getElementById('approval-status');
 const approvalEndDateSpan = document.getElementById('approval-end-date');
 const submitBtn = document.getElementById('submit-btn');
+const datalist = document.getElementById('existing-clients-list'); // אלמנט חדש
 
 let allClientsData = [];
 
@@ -19,29 +20,82 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.data) {
                 allClientsData = response.data;
+                populateDatalist(allClientsData); // <-- קריאה לפונקציה החדשה
             }
         }).catch(err => console.error("Error fetching initial data:", err));
 });
+
+// --- פונקציה חדשה: מילוי רשימת ההשלמה האוטומטית ---
+function populateDatalist(clients) {
+    datalist.innerHTML = '';
+    clients.forEach(client => {
+        const clientName = client[1];
+        const clientId = client[0];
+
+        // הוסף אפשרות עבור שם הלקוח
+        const optionName = document.createElement('option');
+        optionName.value = clientName;
+        datalist.appendChild(optionName);
+
+        // הוסף אפשרות עבור המזהה (אם הוא שונה מהשם)
+        if (clientId !== clientName) {
+            const optionId = document.createElement('option');
+            optionId.value = clientId;
+            datalist.appendChild(optionId);
+        }
+    });
+}
+
+// --- פונקציה חדשה: מילוי אוטומטי של השדות ---
+function autofillClientData(value) {
+    const client = allClientsData.find(c => String(c[0]) === value || String(c[1]) === value);
+    if (client) {
+        const clientId = String(client[0]);
+        const clientName = client[1];
+
+        clientNameInput.value = clientName;
+
+        // נפרק את המזהה לקידומת וסיומת אם אפשר
+        const phoneParts = clientId.split('-');
+        if (phoneParts.length === 2 && !isNaN(phoneParts[1])) {
+            // זה נראה כמו מספר טלפון
+            prefixSelect.value = phoneParts[0];
+            suffixInput.value = phoneParts[1];
+        } else {
+            // זה מזהה אחר
+            prefixSelect.value = 'אחר';
+            suffixInput.value = clientId;
+        }
+        
+        checkApproval(); // הפעל את בדיקת האישור מיד
+    }
+}
 
 // --- האזנה לשינויים בשדות המזהה ---
 prefixSelect.addEventListener('change', checkApproval);
 suffixInput.addEventListener('input', checkApproval);
 
+// --- האזנה חדשה למילוי אוטומטי ---
+clientNameInput.addEventListener('input', () => autofillClientData(clientNameInput.value));
+suffixInput.addEventListener('input', () => autofillClientData(suffixInput.value));
+
+// --- פונקציית בדיקת האישור (נשארה כמעט זהה) ---
 function checkApproval() {
+    // ... (קוד הפונקציה נשאר כפי שהיה)
     const prefix = prefixSelect.value;
     const suffix = suffixInput.value;
     let clientId = '';
 
     if (prefix === 'אחר') {
-        clientId = suffix; // אם נבחר "אחר", המזהה הוא מה שהוקלד
+        clientId = suffix;
     } else if (suffix.length > 0) {
-        clientId = `${prefix}-${suffix}`; // הרכבת מספר טלפון
+        clientId = `${prefix}-${suffix}`;
     } else {
         statusDisplay.classList.remove('visible', 'approved', 'not-approved');
-        return; // אין מספיק מידע לבדיקה
+        return;
     }
     
-    if (clientId.length < 3) return; // אל תבדוק על מזהים קצרים מדי
+    if (clientId.length < 3) return;
 
     const client = allClientsData.find(c => String(c[0]) === clientId);
     
@@ -70,8 +124,9 @@ function checkApproval() {
     }
 }
 
-// --- שליחת טופס רישום כניסה/יציאה ---
+// --- שליחת טופס רישום כניסה/יציאה (נשארה כפי שהייתה) ---
 logForm.addEventListener('submit', (e) => {
+    // ... (קוד הפונקציה נשאר כפי שהיה)
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.innerText = "רושם...";
