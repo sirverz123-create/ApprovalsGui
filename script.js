@@ -1,4 +1,4 @@
-const WEB_APP_URL = "הדבק_כאן_את_הכתובת_שלך"; // ודא שהכתובת כאן נכונה
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxcBlqNn0w8wnCnVV7SlOce-rsKAnpW8LDgjud-R6LVe9WgtBnYr1HVSK0I4zmZWkJ2/exec"; // ודא שהכתובת כאן נכונה
 
 // --- אלמנטים מה-DOM ---
 const form = document.getElementById('approval-form');
@@ -132,3 +132,4 @@ function showResponseMessage(message, isError) {
     responseMessage.textContent = message;
     responseMessage.className = isError ? 'error' : 'success';
 }
+
