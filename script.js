@@ -132,4 +132,3 @@ function showResponseMessage(message, isError) {
     responseMessage.textContent = message;
     responseMessage.className = isError ? 'error' : 'success';
 }
-
