@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צפייה בנתונים</title>
+    <link rel="stylesheet" href="viewer_style.css">
+</head>
+<body>
+    <div class="main-container">
+        <h1>צפייה בנתונים בזמן אמת</h1>
+        <p>המידע מתרענן אוטומטית כל 10 שניות. <a href="index.html">חזור למסך הראשי</a></p>
+
+        <div class="table-section">
+            <h2>מאגר לקוחות ואישורים (מקור נתונים נקי)</h2>
+            <div class="table-container">
+                <table id="db-table">
+                    <thead>
+                        <tr>
+                            <th>מזהה</th>
+                            <th>שם</th>
+                            <th>ביקור אחרון</th>
+                            <th>סוג אישור</th>
+                            <th>מתאריך</th>
+                            <th>עד תאריך</th>
+                            <th>הערות</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h2>יומן כניסות (נתונים גולמיים)</h2>
+            <div class="table-container">
+                <table id="log-table">
+                    <thead>
+                        <tr>
+                            <th>חותמת זמן</th>
+                            <th>שם</th>
+                            <th>מזהה</th>
+                            <th>פעולה</th>
+                            <th>סטטוס אישור</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="viewer_script.js"></script>
+</body>
+</html>
