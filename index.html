@@ -17,12 +17,10 @@
                 <input type="text" id="client-id" list="clients-list" required>
                 <datalist id="clients-list"></datalist>
             </div>
-
             <div class="form-group">
                 <label for="client-name">שם הלקוח:</label>
                 <input type="text" id="client-name" required>
             </div>
-
             <div class="form-group">
                 <label for="approval-type">סוג אישור:</label>
                 <select id="approval-type">
@@ -33,7 +31,6 @@
                     <option value="חודשי">חודשי</option>
                 </select>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label for="start-date">מתאריך:</label>
@@ -44,17 +41,37 @@
                     <input type="date" id="end-date">
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="notes">הערות:</label>
                 <textarea id="notes" rows="3"></textarea>
             </div>
-
             <button type="submit" id="submit-btn">שמור אישור</button>
         </form>
 
         <div id="response-message"></div>
     </main>
+
+    <section class="data-table-section">
+        <h2>מאגר לקוחות ואישורים</h2>
+        <input type="text" id="search-input" placeholder="חפש לפי שם או מזהה...">
+        
+        <div class="table-container">
+            <table id="clients-table">
+                <thead>
+                    <tr>
+                        <th>מזהה לקוח</th>
+                        <th>שם לקוח</th>
+                        <th>תאריך ביקור אחרון</th>
+                        <th>סוג אישור</th>
+                        <th>תאריך התחלה</th>
+                        <th>תאריך סיום</th>
+                    </tr>
+                </thead>
+                <tbody id="clients-table-body">
+                    </tbody>
+            </table>
+        </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
