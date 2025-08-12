@@ -9,7 +9,8 @@ const statusDisplay = document.getElementById('status-display');
 const approvalStatusSpan = document.getElementById('approval-status');
 const approvalEndDateSpan = document.getElementById('approval-end-date');
 const submitBtn = document.getElementById('submit-btn');
-const datalist = document.getElementById('existing-clients-list');
+const namesDatalist = document.getElementById('names-list'); // רשימת שמות
+const idsDatalist = document.getElementById('ids-list');   // רשימת מזהים
 const checkBtn = document.getElementById('check-approval-btn');
 
 let allClientsData = [];
@@ -21,35 +22,46 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.data) {
                 allClientsData = response.data;
-                populateDatalist(allClientsData);
+                populateDatalists(allClientsData); // קריאה לפונקציה החדשה
             }
         }).catch(err => console.error("Error fetching initial data:", err));
 });
 
-// --- פונקציות למילוי הנתונים ---
-function populateDatalist(clients) {
-    datalist.innerHTML = '';
+// --- פונקציה למילוי שתי הרשימות ---
+function populateDatalists(clients) {
+    namesDatalist.innerHTML = '';
+    idsDatalist.innerHTML = '';
     clients.forEach(client => {
-        const clientName = client[1];
         const clientId = client[0];
-        const optionName = document.createElement('option');
-        optionName.value = clientName;
-        datalist.appendChild(optionName);
-        if (clientId !== clientName) {
-            const optionId = document.createElement('option');
-            optionId.value = clientId;
-            datalist.appendChild(optionId);
-        }
+        const clientName = client[1];
+        
+        // הוסף שם לרשימת השמות
+        const nameOption = document.createElement('option');
+        nameOption.value = clientName;
+        namesDatalist.appendChild(nameOption);
+        
+        // הוסף מזהה לרשימת המזהים
+        const idOption = document.createElement('option');
+        idOption.value = clientId;
+        idsDatalist.appendChild(idOption);
     });
 }
 
-// --- פונקציית מילוי אוטומטי (ללא בדיקת אישור) ---
-function autofillClientData(value) {
-    const client = allClientsData.find(c => String(c[0]) === value || String(c[1]) === value);
+// --- פונקציית מילוי אוטומטי ---
+function autofillClientData(value, fieldType) {
+    let client;
+    if (fieldType === 'name') {
+        client = allClientsData.find(c => String(c[1]) === value);
+    } else { // fieldType === 'id'
+        client = allClientsData.find(c => String(c[0]) === value);
+    }
+
     if (client) {
         const clientId = String(client[0]);
         const clientName = client[1];
+        
         clientNameInput.value = clientName;
+        
         const phoneParts = clientId.split('-');
         if (phoneParts.length === 2 && !isNaN(phoneParts[1])) {
             prefixSelect.value = phoneParts[0];
@@ -58,24 +70,30 @@ function autofillClientData(value) {
             prefixSelect.value = 'אחר';
             suffixInput.value = clientId;
         }
-        // ===== השינוי המרכזי: הסרנו את הקריאה ל-checkApproval() מכאן =====
     }
 }
 
 // --- האזנות ---
 checkBtn.addEventListener('click', checkApproval);
 
-clientNameInput.addEventListener('input', (e) => {
-    const value = e.target.value;
-    const client = allClientsData.find(c => String(c[1]) === value || String(c[0]) === value);
-    if (client) {
-        autofillClientData(value);
+// האזנה לבחירת שם מהרשימה
+clientNameInput.addEventListener('input', (e) => autofillClientData(e.target.value, 'name'));
+
+// האזנה לבחירת מזהה מהרשימה
+suffixInput.addEventListener('input', (e) => {
+    const prefix = prefixSelect.value;
+    if (prefix === 'אחר') {
+        autofillClientData(e.target.value, 'id');
+    } else {
+        const fullId = `${prefix}-${e.target.value}`;
+        autofillClientData(fullId, 'id');
     }
 });
 
 
 // --- פונקציית בדיקת האישור (מופעלת רק בלחיצת כפתור) ---
 function checkApproval() {
+    // ... (הקוד כאן נשאר ללא שינוי) ...
     const prefix = prefixSelect.value;
     const suffix = suffixInput.value;
     let clientId = '';
@@ -90,7 +108,6 @@ function checkApproval() {
     }
 
     const client = allClientsData.find(c => String(c[0]) === clientId);
-    
     statusDisplay.classList.add('visible');
 
     if (client) {
@@ -118,6 +135,7 @@ function checkApproval() {
 
 // --- שליחת טופס רישום כניסה/יציאה (ללא שינוי) ---
 logForm.addEventListener('submit', (e) => {
+    // ... (הקוד כאן נשאר ללא שינוי) ...
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.innerText = "רושם...";
