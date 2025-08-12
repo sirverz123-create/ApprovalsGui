@@ -1,0 +1,43 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+main {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+h1 { text-align: center; color: #1c1e21; margin-bottom: 20px; }
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; font-weight: 600; color: #606770; }
+input[type="text"], select {
+    width: 100%; padding: 10px; border: 1px solid #dddfe2; border-radius: 6px; box-sizing: border-box; font-size: 16px;
+}
+.action-select { display: flex; gap: 10px; }
+.action-select label { padding: 10px 15px; border: 1px solid #dddfe2; border-radius: 6px; cursor: pointer; flex-grow: 1; text-align: center; }
+.action-select input[type="radio"] { display: none; }
+.action-select input[type="radio"]:checked + label { background-color: #e7f3ff; color: #1877f2; border-color: #1877f2; }
+.phone-input { display: flex; gap: 10px; }
+#phone-prefix { flex-basis: 30%; }
+#phone-suffix { flex-basis: 70%; }
+button {
+    width: 100%; padding: 12px; background-color: #1877f2; color: white; border: none;
+    border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background-color 0.2s;
+}
+button:hover { background-color: #166fe5; }
+#status-display {
+    margin-top: 20px; padding: 15px; border-radius: 6px; background-color: #f7f7f7;
+    border: 1px solid #e0e0e0; text-align: center; display: none;
+}
+#status-display.visible { display: block; }
+#status-display.approved { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+#status-display.not-approved { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
