@@ -23,7 +23,7 @@
 
             <div class="form-group">
                 <label for="client-name">שם הלקוח:</label>
-                <input type="text" id="client-name" required>
+                <input type="text" id="client-name" list="existing-clients-list" required>
             </div>
             
             <div class="form-group">
@@ -38,9 +38,11 @@
                         <option value="058">058</option>
                         <option value="אחר">אחר</option>
                     </select>
-                    <input type="text" id="phone-suffix" maxlength="7" placeholder="המשך המספר...">
+                    <input type="text" id="phone-suffix" list="existing-clients-list" maxlength="7" placeholder="המשך המספר...">
                 </div>
             </div>
+
+            <button type="button" id="check-approval-btn" class="secondary-btn">בדוק אישור לפי מספר מזהה</button>
 
             <datalist id="existing-clients-list">
                 </datalist>
@@ -56,5 +58,4 @@
 
     <script src="guard_script.js"></script>
 </body>
-
 </html>
