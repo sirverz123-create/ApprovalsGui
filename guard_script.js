@@ -10,7 +10,7 @@ const approvalStatusSpan = document.getElementById('approval-status');
 const approvalEndDateSpan = document.getElementById('approval-end-date');
 const submitBtn = document.getElementById('submit-btn');
 const datalist = document.getElementById('existing-clients-list');
-const checkBtn = document.getElementById('check-approval-btn'); // הכפתור החדש
+const checkBtn = document.getElementById('check-approval-btn');
 
 let allClientsData = [];
 
@@ -43,6 +43,7 @@ function populateDatalist(clients) {
     });
 }
 
+// --- פונקציית מילוי אוטומטי (ללא בדיקת אישור) ---
 function autofillClientData(value) {
     const client = allClientsData.find(c => String(c[0]) === value || String(c[1]) === value);
     if (client) {
@@ -57,15 +58,13 @@ function autofillClientData(value) {
             prefixSelect.value = 'אחר';
             suffixInput.value = clientId;
         }
+        // ===== השינוי המרכזי: הסרנו את הקריאה ל-checkApproval() מכאן =====
     }
 }
 
-// ===== כאן נמצא השינוי המרכזי בלוגיקה =====
-
-// 1. הוספנו האזנה לכפתור הבדיקה החדש
+// --- האזנות ---
 checkBtn.addEventListener('click', checkApproval);
 
-// 2. הוספנו האזנה פשוטה יותר למילוי אוטומטי של השדות מהרשימה
 clientNameInput.addEventListener('input', (e) => {
     const value = e.target.value;
     const client = allClientsData.find(c => String(c[1]) === value || String(c[0]) === value);
@@ -73,6 +72,7 @@ clientNameInput.addEventListener('input', (e) => {
         autofillClientData(value);
     }
 });
+
 
 // --- פונקציית בדיקת האישור (מופעלת רק בלחיצת כפתור) ---
 function checkApproval() {
