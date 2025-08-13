@@ -91,46 +91,73 @@ suffixInput.addEventListener('input', (e) => {
 });
 
 
-// --- פונקציית בדיקת האישור (מופעלת רק בלחיצת כפתור) ---
+// --- פונקציית בדיקת האישור (גרסה משופרת עם סנכרון בזמן אמת) ---
 function checkApproval() {
-    // ... (הקוד כאן נשאר ללא שינוי) ...
-    const prefix = prefixSelect.value;
-    const suffix = suffixInput.value;
-    let clientId = '';
+    checkBtn.disabled = true;
+    checkBtn.innerText = "בודק...";
 
-    if (prefix === 'אחר') {
-        clientId = suffix;
-    } else if (suffix.length > 0) {
-        clientId = `${prefix}-${suffix}`;
-    } else {
-        alert("אנא הזן מספר מזהה.");
-        return;
-    }
+    // 1. שלוף את הנתונים העדכניים ביותר מהשרת
+    fetch(WEB_APP_URL)
+        .then(res => res.json())
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            }
+            
+            // 2. שמור את הנתונים המעודכנים במשתנה הגלובלי
+            allClientsData = response.database || []; 
+            populateDatalists(allClientsData); // רענון רשימות ההשלמה האוטומטית
 
-    const client = allClientsData.find(c => String(c[0]) === clientId);
-    statusDisplay.classList.add('visible');
+            // 3. בצע את לוגיקת הבדיקה עם הנתונים העדכניים
+            const prefix = prefixSelect.value;
+            const suffix = suffixInput.value;
+            let clientId = '';
 
-    if (client) {
-        const approvalType = client[3];
-        const startDate = client[4] ? new Date(client[4]) : null;
-        const endDate = client[5] ? new Date(client[5]) : null;
-        const today = new Date();
-        today.setHours(0,0,0,0);
+            if (prefix === 'אחר') {
+                clientId = suffix;
+            } else if (suffix.length > 0) {
+                clientId = `${prefix}-${suffix}`;
+            } else {
+                alert("אנא הזן מספר מזהה.");
+                return; // יציאה מוקדמת
+            }
 
-        if (startDate && endDate && today >= startDate && today <= endDate) {
-            statusDisplay.className = 'visible approved';
-            approvalStatusSpan.textContent = approvalType;
-            approvalEndDateSpan.textContent = endDate.toLocaleDateString('he-IL');
-        } else {
+            const client = allClientsData.find(c => String(c[0]) === clientId);
+            statusDisplay.classList.add('visible');
+
+            if (client) {
+                const approvalType = client[3];
+                const startDate = client[4] ? new Date(client[4]) : null;
+                const endDate = client[5] ? new Date(client[5]) : null;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (startDate && endDate && today >= startDate && today <= endDate) {
+                    statusDisplay.className = 'visible approved';
+                    approvalStatusSpan.textContent = approvalType;
+                    approvalEndDateSpan.textContent = endDate.toLocaleDateString('he-IL');
+                } else {
+                    statusDisplay.className = 'visible not-approved';
+                    approvalStatusSpan.textContent = "לא בתוקף";
+                    approvalEndDateSpan.textContent = '---';
+                }
+            } else {
+                statusDisplay.className = 'visible not-approved';
+                approvalStatusSpan.textContent = 'לא נמצא במאגר';
+                approvalEndDateSpan.textContent = '---';
+            }
+        })
+        .catch(err => {
+            console.error("Error checking approval:", err);
+            alert("שגיאה בבדיקת האישור. נסה שוב.");
             statusDisplay.className = 'visible not-approved';
-            approvalStatusSpan.textContent = "לא בתוקף";
+            approvalStatusSpan.textContent = 'שגיאת תקשורת';
             approvalEndDateSpan.textContent = '---';
-        }
-    } else {
-        statusDisplay.className = 'visible not-approved';
-        approvalStatusSpan.textContent = 'לא נמצא במאגר';
-        approvalEndDateSpan.textContent = '---';
-    }
+        })
+        .finally(() => {
+            checkBtn.disabled = false;
+            checkBtn.innerText = "בדוק אישור לפי מספר מזהה";
+        });
 }
 
 // --- שליחת טופס רישום כניסה/יציאה (ללא שינוי) ---
@@ -168,3 +195,4 @@ logForm.addEventListener('submit', (e) => {
         submitBtn.innerText = "בצע רישום";
     });
 });
+
