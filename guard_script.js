@@ -15,14 +15,20 @@ const checkBtn = document.getElementById('check-approval-btn');
 
 let allClientsData = [];
 
-// --- טעינת נתונים ראשונית ---
+// --- טעינת נתונים ראשונית (גרסה מתוקנת) ---
 document.addEventListener('DOMContentLoaded', () => {
     fetch(WEB_APP_URL)
         .then(res => res.json())
         .then(response => {
-            if (response.data) {
-                allClientsData = response.data;
-                populateDatalists(allClientsData); // קריאה לפונקציה החדשה
+            if (response.error) {
+                console.error("Server error:", response.error);
+                return;
+            }
+            // ===== התיקון נמצא כאן =====
+            // שימוש ב-response.database במקום response.data
+            if (response.database) {
+                allClientsData = response.database;
+                populateDatalists(allClientsData);
             }
         }).catch(err => console.error("Error fetching initial data:", err));
 });
@@ -195,4 +201,5 @@ logForm.addEventListener('submit', (e) => {
         submitBtn.innerText = "בצע רישום";
     });
 });
+
 
