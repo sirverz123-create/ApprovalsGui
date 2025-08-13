@@ -24,7 +24,10 @@ function loadAndDisplayData() {
             if (apiResponse.error) {
                 throw new Error(apiResponse.error);
             }
-            allClientsData = apiResponse.data;
+            // ===== התיקון נמצא כאן =====
+            // שינינו את apiResponse.data ל-apiResponse.database
+            allClientsData = apiResponse.database || []; // שימוש ב-database וגם ב-fallback למערך ריק
+            
             populateClientsDatalist(allClientsData);
             populateClientsTable(allClientsData);
         })
@@ -138,4 +141,5 @@ function showResponseMessage(message, isError) {
     responseMessage.textContent = message;
     responseMessage.className = isError ? 'error' : 'success';
 }
+
 
