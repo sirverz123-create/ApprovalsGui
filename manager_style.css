@@ -1,49 +1,54 @@
+/* General Body Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f4f7f9;
     margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column; /* שינוי לכיוון טורי */
-    align-items: center; /* מרכוז אופקי */
-    gap: 30px; /* רווח בין הטופס לטבלה */
+    padding: 15px; /* Padding for small screens */
     min-height: 100vh;
     box-sizing: border-box;
 }
 
+/* Container for layout */
+.manager-container {
+    display: flex;
+    flex-direction: column; /* Default to column layout for mobile-first */
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+/* Shared styles for form and table sections */
 main, .data-table-section {
     background-color: #ffffff;
-    padding: 30px;
+    padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 500px;
+    max-width: 500px; /* Max width for the form */
     box-sizing: border-box;
 }
 
 .data-table-section {
-    max-width: 900px;
-    margin-top: 0; /* איפוס המרווח העליון הקודם */
+    max-width: 900px; /* Max width for the table container */
 }
 
-
-h1 {
+/* Headings */
+h1, h2 {
     text-align: center;
     color: #2c3e50;
+    margin-top: 0;
     margin-bottom: 25px;
 }
 
+/* Form Styles */
 .form-group {
     margin-bottom: 20px;
 }
 
 .form-row {
     display: flex;
+    flex-direction: column; /* Default to column for mobile */
     gap: 20px;
-}
-
-.form-row .form-group {
-    width: 100%;
 }
 
 label {
@@ -88,91 +93,62 @@ button:hover {
     background-color: #2980b9;
 }
 
+/* Response Messages */
 #response-message {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 6px;
-    text-align: center;
-    font-weight: bold;
-    display: none; /* Hidden by default */
+    margin-top: 20px; padding: 15px; border-radius: 6px;
+    text-align: center; font-weight: bold; display: none;
 }
+#response-message.success { background-color: #d4edda; color: #155724; display: block; }
+#response-message.error { background-color: #f8d7da; color: #721c24; display: block; }
 
-#response-message.success {
-    background-color: #d4edda;
-    color: #155724;
-    display: block;
-}
-
-#response-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    display: block;
-}
-
-/* ===== עיצובים קיימים עבור הטבלה ===== */
-.data-table-section h2 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 25px;
-}
-
+/* Table Styles */
 #search-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #bdc3c7;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 16px;
+    width: 100%; padding: 12px; border: 1px solid #bdc3c7;
+    border-radius: 6px; box-sizing: border-box; font-size: 16px;
     margin-bottom: 20px;
 }
 
 .table-container {
     max-height: 500px;
     overflow-y: auto;
-    overflow-x: auto; /* הוספת גלילה אופקית */
+    overflow-x: auto; /* Crucial for responsiveness */
     border: 1px solid #e0e0e0;
     border-radius: 8px;
 }
 
 #clients-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+    width: 100%; border-collapse: collapse; font-size: 14px;
 }
 
 #clients-table th, #clients-table td {
-    padding: 12px 15px;
-    text-align: right;
+    padding: 12px 15px; text-align: right;
     border-bottom: 1px solid #e0e0e0;
-    white-space: nowrap; /* מניעת שבירת שורות בתאים */
+    white-space: nowrap; /* Prevent line breaks in cells */
 }
 
 #clients-table thead tr {
-    background-color: #f4f7f9;
-    color: #34495e;
-    font-weight: 600;
+    background-color: #f4f7f9; color: #34495e; font-weight: 600;
 }
+#clients-table tbody tr:nth-of-type(even) { background-color: #fcfcfc; }
+#clients-table tbody tr:hover { background-color: #ecf0f1; }
 
-#clients-table tbody tr:nth-of-type(even) {
-    background-color: #fcfcfc;
-}
+/* ===== Media Queries for Responsiveness ===== */
 
-#clients-table tbody tr:hover {
-    background-color: #ecf0f1;
-}
-
-/* ===== התאמות למובייל ===== */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-    
-    main, .data-table-section {
-        padding: 20px;
-    }
-
+/* For Tablets and small desktops */
+@media (min-width: 600px) {
     .form-row {
-        flex-direction: column; /* שדות התאריך אחד מתחת לשני */
-        gap: 0;
+        flex-direction: row; /* Side-by-side date fields */
+    }
+}
+
+/* For larger screens, align form and table side-by-side */
+@media (min-width: 1440px) {
+    .manager-container {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    main {
+        flex-shrink: 0; /* Prevent the form from shrinking */
     }
 }
