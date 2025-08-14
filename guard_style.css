@@ -7,6 +7,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 main {
     background-color: #ffffff;
@@ -15,6 +16,7 @@ main {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 400px;
+    box-sizing: border-box;
 }
 h1 { text-align: center; color: #1c1e21; margin-bottom: 20px; }
 .form-group { margin-bottom: 15px; }
@@ -51,4 +53,17 @@ button:hover { background-color: #166fe5; }
 
 .secondary-btn:hover {
     background-color: #5a6268;
+}
+
+/* ===== התאמות למובייל ===== */
+@media (max-width: 420px) {
+    body {
+        padding: 10px;
+    }
+    main {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 22px;
+    }
 }
