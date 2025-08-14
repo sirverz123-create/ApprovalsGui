@@ -4,19 +4,28 @@ body {
     margin: 0;
     padding: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* שינוי לכיוון טורי */
+    align-items: center; /* מרכוז אופקי */
+    gap: 30px; /* רווח בין הטופס לטבלה */
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
-main {
+main, .data-table-section {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 500px;
+    box-sizing: border-box;
 }
+
+.data-table-section {
+    max-width: 900px;
+    margin-top: 0; /* איפוס המרווח העליון הקודם */
+}
+
 
 h1 {
     text-align: center;
@@ -98,20 +107,9 @@ button:hover {
     background-color: #f8d7da;
     color: #721c24;
     display: block;
-
 }
 
-/* ===== עיצובים חדשים עבור הטבלה ===== */
-.data-table-section {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 900px;
-    margin-top: 40px;
-}
-
+/* ===== עיצובים קיימים עבור הטבלה ===== */
 .data-table-section h2 {
     text-align: center;
     color: #2c3e50;
@@ -130,7 +128,8 @@ button:hover {
 
 .table-container {
     max-height: 500px;
-    overflow-y: auto; /* מאפשר גלילה אם הטבלה ארוכה */
+    overflow-y: auto;
+    overflow-x: auto; /* הוספת גלילה אופקית */
     border: 1px solid #e0e0e0;
     border-radius: 8px;
 }
@@ -145,6 +144,7 @@ button:hover {
     padding: 12px 15px;
     text-align: right;
     border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap; /* מניעת שבירת שורות בתאים */
 }
 
 #clients-table thead tr {
@@ -159,4 +159,20 @@ button:hover {
 
 #clients-table tbody tr:hover {
     background-color: #ecf0f1;
+}
+
+/* ===== התאמות למובייל ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    main, .data-table-section {
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column; /* שדות התאריך אחד מתחת לשני */
+        gap: 0;
+    }
 }
