@@ -6,14 +6,18 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 15px;
+    box-sizing: border-box;
 }
 
 .landing-container {
     text-align: center;
     background-color: white;
-    padding: 50px;
+    padding: 40px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
 }
 
 h1 {
@@ -55,9 +59,33 @@ p {
 
 .guard-btn {
     background-color: #42b72a;
-
 }
 
 .viewer-btn {
     background-color: #ffc107; /* צבע צהוב */
+}
+
+/* ===== התאמות למובייל ===== */
+@media (max-width: 600px) {
+    .landing-container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .button-container {
+        flex-direction: column; /* סידור הכפתורים בטור */
+        gap: 15px;
+    }
+
+    .selection-button {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
