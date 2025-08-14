@@ -3,6 +3,7 @@ body {
     background-color: #f0f2f5;
     margin: 0;
     padding: 20px;
+    box-sizing: border-box;
 }
 .main-container {
     max-width: 1200px;
@@ -26,6 +27,7 @@ p {
 .table-container {
     max-height: 400px;
     overflow-y: auto;
+    overflow-x: auto; /* הוספת גלילה אופקית */
     border: 1px solid #dddfe2;
     border-radius: 8px;
     background-color: white;
@@ -39,6 +41,7 @@ th, td {
     padding: 10px 12px;
     text-align: right;
     border-bottom: 1px solid #dddfe2;
+    white-space: nowrap; /* מניעת שבירת שורות */
 }
 thead tr {
     background-color: #f5f6f7;
@@ -47,4 +50,17 @@ thead tr {
 }
 tbody tr:nth-of-type(even) {
     background-color: #f7f7f7;
+}
+
+/* ===== התאמות למובייל ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 20px;
+    }
 }
