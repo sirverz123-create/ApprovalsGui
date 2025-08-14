@@ -4,52 +4,55 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    padding: 15px;
+    padding: 20px; /* Added padding for smaller screens */
     box-sizing: border-box;
 }
 
 .landing-container {
     text-align: center;
     background-color: white;
-    padding: 40px;
+    padding: 30px 25px; /* Adjusted padding */
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
 }
 
 h1 {
     color: #1c1e21;
     margin-bottom: 15px;
+    font-size: 26px; /* Slightly adjusted font size */
 }
 
 p {
     color: #606770;
-    font-size: 18px;
-    margin-bottom: 40px;
+    font-size: 17px;
+    margin-bottom: 35px;
 }
 
 .button-container {
     display: flex;
-    gap: 20px;
+    flex-direction: column; /* Stack buttons vertically by default */
+    gap: 15px; /* Spacing between buttons */
     justify-content: center;
 }
 
 .selection-button {
-    display: inline-block;
-    padding: 15px 30px;
+    display: block; /* Make buttons take full width */
+    padding: 15px 25px;
     font-size: 18px;
     font-weight: bold;
     text-decoration: none;
     border-radius: 8px;
     color: white;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .selection-button:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -62,30 +65,18 @@ p {
 }
 
 .viewer-btn {
-    background-color: #ffc107; /* צבע צהוב */
+    background-color: #ffc107;
 }
 
-/* ===== התאמות למובייל ===== */
-@media (max-width: 600px) {
-    .landing-container {
-        padding: 30px 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    p {
-        font-size: 16px;
-    }
-
+/* Media query for wider screens */
+@media (min-width: 480px) {
     .button-container {
-        flex-direction: column; /* סידור הכפתורים בטור */
-        gap: 15px;
+        flex-direction: row; /* Buttons side-by-side on wider screens */
+        gap: 20px;
     }
 
     .selection-button {
-        width: 100%;
-        box-sizing: border-box;
+        display: inline-block;
+        width: auto;
     }
 }
